@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 8.0.15, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.43, for Linux (x86_64)
 --
 -- Host: localhost    Database: sucos_vendas
 -- ------------------------------------------------------
--- Server version	8.0.15
+-- Server version	8.0.43-0ubuntu0.22.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
- SET NAMES utf8 ;
+/*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,7 +21,7 @@
 
 DROP TABLE IF EXISTS `tabela_de_clientes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tabela_de_clientes` (
   `CPF` varchar(11) NOT NULL,
   `NOME` varchar(100) DEFAULT NULL,
@@ -32,13 +32,13 @@ CREATE TABLE `tabela_de_clientes` (
   `ESTADO` varchar(2) DEFAULT NULL,
   `CEP` varchar(8) DEFAULT NULL,
   `DATA_DE_NASCIMENTO` date DEFAULT NULL,
-  `IDADE` smallint(6) DEFAULT NULL,
+  `IDADE` smallint DEFAULT NULL,
   `SEXO` varchar(1) DEFAULT NULL,
   `LIMITE_DE_CREDITO` float DEFAULT NULL,
   `VOLUME_DE_COMPRA` float DEFAULT NULL,
   `PRIMEIRA_COMPRA` bit(1) DEFAULT NULL,
   PRIMARY KEY (`CPF`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8  COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-16 15:44:54
+-- Dump completed on 2026-02-12 22:43:53
