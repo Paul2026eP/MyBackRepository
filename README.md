@@ -1,2 +1,2 @@
-Work of class in portuguese; begin project data base, structure simple in triades and code...
-Trabalho de Classe em Lingua Portuguesa; inicio de projeto de banco de dados, estrutura simples em triades e codigo.
+# consultasAvancadasMySQL
+Repositório voltado para armazenagem dos arquivos necessários para aula
