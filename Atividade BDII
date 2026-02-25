@@ -1,0 +1,31 @@
+#Problema 1
+SELECT nome, de_ferias, bairro FROM tabela_de_vendedores WHERE nome='Cláudia Morais'  AND de_ferias=1;
+# A Claudia de ferias, segunda a tabela.
+
+#Problema 2
+SELECT nome, de_ferias FROM tabela_de_vendedores WHERE DE_FERIAS=1 AND PERCENTUAL_COMISSAO>0.10;
+#A pessoa que está de ferias e tem comissão maior maior 0.10  é a Roberta Martins.
+
+#Problema 3
+SELECT MATRICULA, DATA_VENDA,CPF FROM notas_fiscais WHERE MATRICULA=00237 AND DATA_VENDA='2015-01-12';
+# O CPF não pode ser a PK; porque existe varias NF em CPF's diferentes na mesma matricula.
+
+#Problema 4
+SELECT CODIGO_DO_PRODUTO, QUANTIDADE, PRECO FROM itens_notas_fiscais WHERE QUANTIDADE >= 99 AND PRECO = (SELECT MAX(PRECO) FROM itens_notas_fiscais);
+# Os codigo dos produtos de maior valor é 1022450.
+
+#Problema 5
+SELECT 
+c.NOME AS CLIENTE,
+p.NOME_DO_PRODUTO AS PRODUTO,
+p.SABOR
+FROM itens_notas_fiscais i 
+JOIN notas_fiscais n ON n.NUMERO = i.NUMERO
+JOIN tabela_de_clientes c ON c.CPF = n.CPF
+JOIN tabela_de_vendedores v ON v.MATRICULA = n.MATRICULA
+JOIN tabela_de_produtos p ON p.CODIGO_DO_PRODUTO = i.CODIGO_DO_PRODUTO
+WHERE i.NUMERO = 102
+AND i.CODIGO_DO_PRODUTO = '1101035'
+AND i.QUANTIDADE = 84
+#Devido a duplicidade de Nomes de Colunas, foram criados variaveis com letras; 
+#o Cliente é o | Valdeci da Silva| PRODUTO linha Refrescante - 1 Litro - Morango/Limão | SABOR Morango/Limão. 
