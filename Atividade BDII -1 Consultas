@@ -1,0 +1,40 @@
+CREATE SCHEMA sucos_vendas; -- cria base para importação --
+SELECT * FROM tabela_de_clientes; -- * lista toda a tabela orientado após o FROM --
+SELECT * FROM tabela_de_produtos; -- * lista toda a tabela orientado após o FROM --
+SELECT CPF, NOME FROM tabela_de_clientes; # SELECT nome das colunas especificas #
+# uso do filtro WHERE nome da coluna = 'caracteristica a busca' #
+SELECT * FROM tabela_de_produtos WHERE CODIGO_DO_PRODUTO = '1000889';
+SELECT * FROM tabela_de_produtos WHERE SABOR = 'Lima/Limão';
+# uso dos filtros WHERE nome da coluna condicional ><= e valor #
+SELECT * FROM tabela_de_produtos WHERE PRECO_DE_LISTA > 8.40;
+# uso do filtro WHERE nome da coluna BETWEEN valor 1 AND/OR valor 2#
+SELECT * FROM tabela_de_produtos WHERE PRECO_DE_LISTA BETWEEN 8.40 AND 8.50;
+
+SELECT * FROM tabela_de_clientes;
+
+SELECT CPF, NOME FROM tabela_de_clientes;
+
+SELECT * FROM tabela_de_clientes WHERE cpf = '1471156710';
+
+SELECT * FROM tabela_de_clientes WHERE nome = 'Petra Oliveira';
+
+SELECT * FROM tabela_de_produtos;
+SELECT * FROM tabela_de_produtos WHERE preco_de_lista > 8.41;
+
+SELECT * FROM tabela_de_produtos WHERE preco_de_lista 
+BETWEEN 8.40 AND 8.42;
+
+SELECT * FROM tabela_de_produtos WHERE 
+sabor ='Manga' OR tamanho = '350 ml';
+
+SELECT * FROM tabela_de_produtos WHERE
+sabor = 'manga' AND tamanho = '350 ml';
+
+SELECT * FROM tabela_de_produtos WHERE
+NOT (sabor = 'manga' AND tamanho = '350 ml');
+
+SELECT * FROM tabela_de_produtos WHERE
+NOT (sabor = 'manga' OR tamanho = '350 ml');
+
+
+SELECT * FROM tabela_de_produtos WHERE sabor NOT ('manga', 'maça');
