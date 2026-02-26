@@ -1,0 +1,29 @@
+SELECT * FROM tabela_de_produtos;
+
+SELECT DISTINCT embalagem, tamanho, SABOR FROM tabela_de_produtos
+WHERE embalagem = 'PET';
+
+#USO DISTINCT
+SELECT * FROM tabela_de_clientes;
+#Quais os bairros da cidade do Rio de Janeiro que possuem clientes?
+SELECT DISTINCT NOME, BAIRRO, CIDADE FROM tabela_de_clientes WHERE CIDADE = 'RIO DE JANEIRO';
+
+#USO LIMIT
+SELECT * FROM tabela_de_produtos LIMIT 4; 
+
+#Quais são as 10 primeiras vendas do dia 2017-01-01?
+SELECT * FROM notas_fiscais WHERE DATA_VENDA = '2017-01-01' LIMIT 10;
+
+#USO ORDER BY 
+SELECT * FROM tabela_de_produtos;
+SELECT * FROM tabela_de_produtos ORDER BY NOME_DO_PRODUTO;
+SELECT * FROM tabela_de_produtos ORDER BY PRECO_DE_LISTA;
+SELECT sabor, preco_de_lista from tabela_de_produtos;
+SELECT  tabela_de_produtos ORDER BY sabor, preco_de_lista;
+#Teste com DESC
+SELECT sabor, preco_de_lista FROM tabela_de_produtos ORDER BY preco_de_lista DESC;
+SELECT sabor, preco_de_lista FROM tabela_de_produtos ORDER BY preco_de_lista ASC;
+
+#Qual (ou quais) foi (foram) a(S) maior(es) venda(s) do 'Linha Refrescante - 1 Litro - Morango/Limão' em quantidade e preço?
+SELECT * FROM tabela_de_produtos WHERE nome_do_produto = 'Linha Refrescante - 1 Litro - Morango/Limão';
+SELECT QUANTIDADE, PRECO, CODIGO_DO_PRODUTO FROM itens_notas_fiscais WHERE CODIGO_DO_PRODUTO = '1101035' ORDER BY QUANTIDADE, PRECO DESC;
