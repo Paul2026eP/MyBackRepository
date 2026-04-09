@@ -1,0 +1,57 @@
+-- Aula 08/04/26 - ARRAY UPDATE e ARRAY INSERT - ARRAY = LISTA
+CREATE DATABASE testjson;
+USE testjson;
+
+# Estrutura de dados que armazena uma coleção sequencial e ordenada de elementos, 
+# geralmente do mesmo tipo e sob unico nome de uma variável 
+-- ["A","B","C"]
+# $[0] = "A",  $[1] = "B", $[2] = "C" Inicia a variavel representativa pelo 0; que é igual a A
+CREATE TABLE X (Y JSON);
+INSERT INTO X VALUES ('["A","B","C"]');
+SELECT * FROM X;
+TRUNCATE X; -- LIMPA A TABELA --
+DELETE FROM X;
+INSERT INTO X VALUES (JSON_ARRAY ("A","B","C", "E"));
+UPDATE X SET Y = JSON_ARRAY_APPEND (Y, "$[0]", "A1");
+UPDATE X SET Y = JSON_ARRAY_APPEND (Y, "$[1]", "B1","$[2]", "C2");
+UPDATE X SET Y = JSON_ARRAY_APPEND (Y, "$", "E1");
+UPDATE X SET Y = JSON_ARRAY_APPEND (Y, "$[4]", "E"); -- retorna sem alterações, pois não existe a lista 4 para inserção 
+UPDATE X SET Y = JSON_ARRAY_APPEND (Y, "$[0] [0]", "E1");
+-- JSON_ARRAY_APPEND
+-- Insere novos elementos dentro do array [ ["A", "A1"], ["B", "B1"], ["C", "C1"], "E1" ]
+
+#JSON INSERT, REPLACE E REMOVE
+INSERT INTO X VALUES ('{"chave1":"valor1"}'); -- Sintese generica
+SELECT * FROM X;
+UPDATE X SET Y = JSON_INSERT (Y, "$.chave2","valor2", "$.chave3","valor3","$.chave4","valor4"); -- Sintese de boas praticas
+UPDATE X SET Y = JSON_REPLACE (Y, "$.chave1","valorx", "$.chave4","valorz");  -- Corrigi, Substitui ou Altera chave ou valor
+UPDATE X SET Y = JSON_REMOVE (Y, "$.chave4"); -- Remove chaves ...
+
+-- ATIVIDADE 3
+#JSON MERGE (PRESERVE E PATH), JSON DEPTH, JSON LENGTH, JSON TYPE, e JSON VALID.
+-- JSON_MERGE_PATCH – mescla objetos, substitui valores existentes:
+SELECT JSON_MERGE_PATCH(Y,'{"chave3":"valorw","chave4":"valorz"}') AS Y FROM X;
+
+-- JSON_MERGE_PRESERVE – mescla preservando arrays e valores:
+SELECT JSON_MERGE_PRESERVE(Y,'{"chave3":"valorw","chave4":"valorz"}') AS Y FROM X;
+
+-- JSON_DEPTH – retorna a profundidade do documento JSON em numero-quantidade:
+SELECT JSON_DEPTH(Y) AS profundidade FROM X;
+SELECT JSON_DEPTH('{"chave3":"valorw","chave4":"valorz"}') AS profundidade;
+
+-- JSON_LENGTH – retorna o número de elementos listas nas linhas:
+SELECT JSON_LENGTH(Y) AS tamanho FROM X;
+
+-- JSON_TYPE – Retorna OBJECT, quando existe valores de uma {}, mostrando que é um objeto (possui conteudo):
+SELECT JSON_TYPE(Y) AS tipo FROM X;
+
+-- JSON_VALID – verifica se o conteúdo é JSON válido 1, ou invalido 0:
+SELECT JSON_VALID(Y) AS valido FROM X;
+SELECT JSON_VALID(1) AS invalido FROM X;
+
+
+
+
+
+
+
