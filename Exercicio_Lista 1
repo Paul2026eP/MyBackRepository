@@ -1,0 +1,133 @@
+#Lista 1 - Correção de Sintaxe JSON
+
+# Exercício 1
+/*Analise a sintaxe (escrita) das variáveis 
+que possuem como valor dados no formato JSON e corrija
+os erros de sintaxe. Reescreva os códigos ou adicione a linha correta
+utilizando um comentário, como no exemplo na alternativa a)*/
+
+-- a)
+ 
+aluno = {
+		"nome""Maria", # ...Falta : dois pontos e espaço entre as aspas e valores.
+		"idade": 30, 
+        "data_nascimento": 1995-02-02, # ... precisa ser string
+			"endereco: # ... Falta uma chave e uma aspa --
+				"rua":"Rua dos Fundos",
+				"numero":123
+				"bairro"; "Centro", # ...possui um ; ponto e virgula no lugar dos : dois pontos
+				"cep":77830000 #...falta aspas
+			}
+			"contato":{
+				"telefone":"99999999",
+				"email":"maria@dominio.com"
+			}
+		
+
+-- b)
+
+cidade = Falta chaves {}
+		"nome":"Londrina", espaço após 2 pontos
+		"idade": 90, 
+        "data_fundacao": 1934-12-10, tem que transformar em string add ""
+		"":581000, # ... as "" tem que add populacao
+		"estado": "Paraná",
+        "territorio":{
+			"area":1652569,
+			"relevo": "Predominantemente Plano",
+            "altitude_maxima":840 # ...Falta a virgula pra separa maxima de minima
+            "altitude_minima":570,
+			
+		}
+
+-- c)
+
+funcionario = {
+    "Cpf": "33344555587",
+    "Sexo": "M",
+    "Salario": 40000.0
+    "Endereco": Rua da Lapa 34 São Paulo SP   #...Falta aspas antes da Rua e após SP para string valida
+    "Nome_Meio": "T",
+    "Dependentes": [
+        {
+            "Sexo": "F",
+            "Parentesco": "Filha",
+            "Data_Nascimento": "1986-01-05T00:04:00",
+            "Nome_Dependente": "Alicia"
+        } #...Falta virgula após a chave pra separação de blocos
+        {
+            "Sexo": "F",
+            "Parentesco": "Esposa",
+            "Data_Nascimento": "1958-01-03T00:05:00",
+            "Nome_Dependente": "Janaína"
+        },
+        {
+            "Sexo": "M",
+            "Parentesco": "Filho",
+            "Data_Nascimento" "1983-01-25T00:10:00", # ... Falta : dois pontos antes da data
+            "Nome_Dependente": "Tiago"
+        },
+    "Ultimo_Nome": "Wong",
+    "Primeiro_Nome": "Fernando",
+    "Cpf_Supervisor: "88866555576", #...Falta da aspas no supervisor
+    "Data_Nascimento": "1955-01-12T00:08:00",
+    "Numero_Departamento": "5"
+}
+}
+
+# Exercício 2
+
+/*Analise as consultas SQL abaixo e aponte os erros de sintaxe. Tanto 
+as estruturas JSON quanto os comandos SQL podem estar erradas.*/
+
+/* a) O JSON_EXTRACT precisa receber primeiro a coluna que contém o JSON e depois os caminhos ($.campo) que você quer extrair, e o WHERE deve ter 
+uma condição, não apenas o nome da tabela. */
+SELECT 
+	JSON_EXTRACT('$.Primeiro_Nome', 
+    '$.Data_Nascimento', '$.Salario') 
+WHERE tb_object_funcionario; 
+
+-- b)
+SELECT 
+	JSON_UNQUOTE(JSON_EXTRACT(JSON,"$.Primeiro_Nome")), #...Falta a virgula o JSON_UNQUOTE não aceita os dois argumentos 
+    JSON_UNQUOTE(JSON_EXTRACT(JSON,"$.Data_Nascimento"), #...Falta um Parenteses
+    JSON_EXTRACT(JSON,"$.Salario")
+FROM empresa; # Tabela empresa não existe
+
+-- c) Uso incorreto de alias na lista (T1.PARENTESCO), e Sintaxe do JSON_TABLE.
+SELECT T1.PARENTESCO, T1.SEXO FROM tb_object_funcionario
+CROSS JOIN
+JSON_TABLE (
+	JSON_EXTRACT(JSON, "$.Dependentes") "$[*]" #...Falta uma virgula após o parenteses.
+    COLUMNS (PARENTESCO VARCHAR(50) "$.Parentesco", #...Falta PATH no uso da sintese
+			SEXO VARCHAR(50) PATH "$.Sexo")
+) AS T2;
+
+-- d)
+SELECT JSON_KEYS(doc, "geography") FROM countryinfo #...Correto usar $. antes do geography para sintese
+WHERE _id = 'BRA'; #... id no banco de dados analisado (world_x) é em formato de numero 00000..., BRA é um CODE
+
+SELECT * FROM countryinfo;
+
+-- e)
+SELECT JSON_EXTRACT(doc, "$.GNP") as GNP
+  , JSON_EXTRACT(doc, "$.Code") as Code
+  , JSON_EXTRACT(doc, "$.Name") as Name
+  , JSON_EXTRACT(doc, "$.IndepYear") as IndepYear
+  , JSON_EXTRACT(doc, "$.geography.Region") as Region
+  , JSON_EXTRACT(doc, "$.geography.Continent") as Continent
+  , JSON_EXTRACT(doc, "$.geography[0]") as SurfaceArea #Erro de sentido, só é usado [0] em lista; uso incorreto de índices em objetos JSON.
+  , JSON_EXTRACT(doc, "$.government.HeadOfState") as HeadOfState
+  , JSON_EXTRACT(doc, "$.government.GovernmentForm") as GovernmentForm
+  , JSON_EXTRACT(doc, "$.demographics") as Population #...Falta uma virgula após population para separa JSON, e Inconsistência na extração de campos o correto $.demographics.population
+    JSON_EXTRACT(doc, "$.demographics.LifeExpectancy") as LifeExpectancy
+  FROM countryinfo;
+  
+-- f)
+SELECT JSON_EXTRACT("$.geography.Continent") as Continent, #Falta o doc pra extrair do JSON.
+(JSON_EXTRACT(doc, "$.demographics.Population")) as Population,
+AVG(JSON_EXTRACT(doc, "$.demographics.LifeExpectancy")) as LifeExpectancy 
+WHERE JSON_EXTRACT(doc, "$.government.") LIKE('%Monarchy%'), #... Ponto . sobrando, e virgula invalida, o correto sem parenteses e  sem virgula para ligar o FROM
+FROM countryinfo
+GROUP BY JSON_EXTRACT(doc, "$.geography")
+ORDER BY 2; #...Pouco claro, o correto usar Population
